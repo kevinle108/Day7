@@ -8,25 +8,6 @@ namespace Day7
     {
         static void Main(string[] args)
         {
-
-            //Console.WriteLine(Gcd(56, 64)); // Expected 8
-            //Console.WriteLine(Gcd(56, 56)); // Expected 56
-            //Console.WriteLine(Lcm(12, 4)); // Expected 12
-            //Console.WriteLine(Lcm(12, 12)); // Expected 12
-            //Console.WriteLine(GcdList(new List<int> { 12 })); // Expected 12
-            //Console.WriteLine(GcdList(new List<int> { 12, 4 })); // Expected 4
-            //Console.WriteLine(GcdList(new List<int> { 12, 4, 15 })); // Expected 1
-            //Console.WriteLine(GcdList(new List<int> { 840, 630, 455 })); // Expected 35
-            //Console.WriteLine(GcdList(new List<int> { 78, 96, 1564, 130, 54, 22 })); // Expected 2
-            //Console.WriteLine(LcmList(new List<int> { 12 })); // Expected 12
-            //Console.WriteLine(LcmList(new List<int> { 12, 24 })); // Expected 24
-            //Console.WriteLine(LcmList(new List<int> { 840, 630, 455 })); // Expected 32760
-            //Console.WriteLine(Min(new List<int> { 1 })); // Expected 1
-            //Console.WriteLine(Min(new List<int> { 1, 432, -2, 4 })); // Expected -2
-            //Console.WriteLine(Max(new List<int> { 2, 2 })); // Expected 2
-            //Console.WriteLine(Max(new List<int> { 1, 432, -2, 4 })); // Expected 432
-            //myList.ForEach(ele => Console.WriteLine(ele));
-
             List<int> myList = UserIntegerList();
             Console.WriteLine();
             Console.WriteLine($"GCD = {GcdList(myList)}");
