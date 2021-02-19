@@ -8,127 +8,56 @@ namespace Day7
     {
         static void Main(string[] args)
         {
-            List<int> myList = UserIntegerList();
-            Console.WriteLine();
-            Console.WriteLine($"GCD = {GcdList(myList)}");
-            Console.WriteLine($"LCM = {LcmList(myList)}");
-            Console.WriteLine($"MIN = {Min(myList)}");
-            Console.WriteLine($"MAX = {Max(myList)}");
+            string expression = "32 + 5.2 * ((4.6 ^ 2 – 20 / 3)) – 4 * 2";
+            //string expression = "2.59 + 253^3 + (45 - 6) / 7";
+            Console.WriteLine($"expression count: {expression.Length}");
+            List<string> tokens = TokensFromString(expression);
+            tokens.ForEach(tok => Console.WriteLine(tok));
+            
 
-            //// FUNCTIONS ////
 
-            // returns the gcd of 2 integers
-            static int Gcd(int num1, int num2)
+
+            /// FUNCTIONS ///
+            static List<string> TokensFromString(string expression)
             {
-                int num3 = num1 % num2;
-                while (num3 != 0)
+                List<string> tokensList = new List<string>();
+                string token = "";
+                bool insideNum = false;
+                for (int i = 0; i < expression.Length; i++)
                 {
-                    num1 = num2;
-                    num2 = num3;
-                    num3 = num1 % num2;
-                }
-                return num2;
-            }
-
-            // returns the lcm of 2 integers
-            static int Lcm(int num1, int num2)
-            {
-                return num1 * num2 / Gcd(num1, num2); 
-            }
-
-            // returns the gcd of a list of integers
-            static int GcdList(List<int> nums)
-            {
-                int gcd = nums[0];
-                if (nums.Count >= 2)
-                {
-                    int index = 1;
-                    while (index <= nums.Count-1)
+                    char c = expression[i];
+                    if (CharType(expression[i]) == "digit" || CharType(expression[i]) == "decimal") 
                     {
-                        gcd = Gcd(gcd, nums[index]);
-                        index++;
+                        insideNum = true;
+                        token += expression[i];
+                        continue;         
+                    }
+                    else
+                    {
+                        if (CharType(expression[i]) == "space") continue;
+                        if (insideNum)
+                        {
+                            tokensList.Add(token);
+                            token = "";
+                            insideNum = false;
+                        }
+                        tokensList.Add(expression[i].ToString());
                     }
                 }
-                return gcd;
-            }
-
-            // returns the lcm of a list of integers
-            static int LcmList(List<int> nums)
-            {
-                int lcm = nums[0];
-                if (nums.Count >= 2)
+                if (token != "")
                 {
-                    int index = 1;
-                    while (index <= nums.Count - 1)
-                    {
-                        lcm = Lcm(lcm, nums[index]);
-                        index++;
-                    }
+                    tokensList.Add(token);
                 }
-                return lcm;
+                return tokensList;
             }
 
-            //return the minimum of a list of integers
-            static int Min(List<int> nums)
+            static string CharType(char c)
             {
-                //if using Linq
-                //return nums.Min();
-                
-                int min = nums[0];
-                nums.ForEach(ele =>
-                {
-                    if (ele < min) min = ele;
-                });
-                return min;
-            }
-
-            //return the maximum of a list of integers
-            static int Max(List<int> nums)
-            {
-                //if using Linq
-                //return nums.Max();
-
-                int max = nums[0];
-                nums.ForEach(ele =>
-                {
-                    if (ele > max) max = ele;
-                });
-                return max;
-            }
-
-            // prompt the user for an integer
-            static void PromptForNum(string msg, out int num)
-            {
-                while (true)
-                {
-                    Console.Write(msg);
-                    if (int.TryParse(Console.ReadLine(), out num) && num >= 0) return;
-                    Console.WriteLine("Invalid input!");
-                }
-            }
-
-            // get a list of integers from the user
-            static List<int> UserIntegerList()
-            {
-                int num;
-                List<int> numsList = new List<int>();
-                PromptForNum("Enter the first number: ", out num);
-                if (num == 0)
-                {
-                    Console.WriteLine("Nothing to do!");
-                    PromptForNum("Enter the first number: ", out num);
-                }
-                else
-                {
-                    numsList.Add(num);
-                    while (true)
-                    {
-                        PromptForNum("Enter the next number (0 if no more): ", out num);
-                        if (num == 0) break;
-                        numsList.Add(num);
-                    }
-                }
-                return numsList;
+                if (c == '+' || c == '-' || c == '–' || c == '*' || c == '/' || c == '^' || c == '%') return "operand";
+                else if (c == '(' || c == ')' || c == '{' || c == '}') return "parenthesis";
+                else if (c == '.') return "decimal";
+                else if (c == ' ') return "space";
+                else return "digit";
             }
         }
     }
