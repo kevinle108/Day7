@@ -8,14 +8,9 @@ namespace Day7
     {
         static void Main(string[] args)
         {
-            string expression = "32 + 5.2 * ((4.6 ^ 2 – 20 / 3)) – 4 * 2";
-            //string expression = "2.59 + 253^3 + (45 - 6) / 7";
-            Console.WriteLine($"expression count: {expression.Length}");
-            List<string> tokens = TokensFromString(expression);
-            tokens.ForEach(tok => Console.WriteLine(tok));
-            
-
-
+            //string expression = "32 + 5.2 * ((4.6 ^ 2 – 20 / 3)) – 4 * 2";
+            List<string> tokens = TokensFromString(Console.ReadLine());
+            OutputTokens(tokens);
 
             /// FUNCTIONS ///
             static List<string> TokensFromString(string expression)
@@ -53,11 +48,16 @@ namespace Day7
 
             static string CharType(char c)
             {
-                if (c == '+' || c == '-' || c == '–' || c == '*' || c == '/' || c == '^' || c == '%') return "operand";
+
+                if (c == ' ') return "space";
+                else if (c == '+' || c == '-' || c == '–' || c == '*' || c == '/' || c == '^' || c == '%') return "operand";
                 else if (c == '(' || c == ')' || c == '{' || c == '}') return "parenthesis";
                 else if (c == '.') return "decimal";
-                else if (c == ' ') return "space";
                 else return "digit";
+            }
+
+            static void OutputTokens(List<string> tokens) {
+                tokens.ForEach(token => Console.WriteLine(token));
             }
         }
     }
